@@ -1,11 +1,11 @@
 package multilanguage;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
-@Setter
 @Getter
-public class RequestDTO {
+@AllArgsConstructor
+public class Request {
 
     private String request;
 

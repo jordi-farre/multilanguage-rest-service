@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class ResponseDTO {
+public class Response {
 
     private String id;
 

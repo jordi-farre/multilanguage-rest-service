@@ -1,13 +1,18 @@
 package multilanguage;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 public class RemoteCallService {
 
+    private RemoteCallClient client;
+    private RemoteCallRepository repository;
 
+    public RemoteCallService(final RemoteCallClient client, final RemoteCallRepository repository) {
+        this.client = client;
+        this.repository = repository;
+    }
 
     public Response remoteCall(final Request request) {
-        throw new NotImplementedException();
+        RemoteResponse response = this.client.execute(request);
+        return this.repository.create(response);
     }
 
 }

@@ -16,10 +16,6 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class RemoteCallControllerShould {
 
-    private static final String DATA = "hello";
-    private static final String ID = "067e6162-3b6f-4ae2-a171-2470b63dff00";
-    private static final String METHOD = "POST";
-    private static final String ORIGIN = "127.0.0.1";
     private RemoteCallController controller;
     @Mock
     private RemoteCallService remoteCallService;
@@ -33,10 +29,10 @@ public class RemoteCallControllerShould {
 
     @Test
     public void execute_remote_call() {
-        final ResponseDTO expectedResponse = createResponseDTO();
-        final RequestDTO requestDTO = createRequestDTO();
-        final Response response = createResponse();
-        final Request request = new Request(DATA);
+        final ResponseDTO expectedResponse = ResponseDTOObjectMother.create();
+        final RequestDTO requestDTO = RequestDTOObjectMother.create();
+        final Response response = ResponseObjectMother.create();
+        final Request request = RequestObjectMother.create();
         when(this.remoteCallService.remoteCall(any(Request.class))).thenReturn(response);
 
         final ResponseDTO obtainedResponse = this.controller.remoteCall(requestDTO);
@@ -45,30 +41,6 @@ public class RemoteCallControllerShould {
         verify(this.remoteCallService).remoteCall(requestArgumentCaptor.capture());
         assertThat(request, new ReflectionEquals(requestArgumentCaptor.getValue()));
         assertThat(expectedResponse, new ReflectionEquals(obtainedResponse));
-    }
-
-    private Response createResponse() {
-        return Response.builder()
-                .id(ID)
-                .method(METHOD)
-                .origin(ORIGIN)
-                .data(DATA)
-                .build();
-    }
-
-    private RequestDTO createRequestDTO() {
-        final RequestDTO requestDTO = new RequestDTO();
-        requestDTO.setRequest(DATA);
-        return requestDTO;
-    }
-
-    private ResponseDTO createResponseDTO() {
-        return ResponseDTO.builder()
-                .id(ID)
-                .method(METHOD)
-                .origin(ORIGIN)
-                .data(DATA)
-                .build();
     }
 
 }
